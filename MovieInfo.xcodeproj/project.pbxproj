@@ -19,6 +19,10 @@
 		8BA3C3202234E0D300DD11C1 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3C31F2234E0D300DD11C1 /* Movie.swift */; };
 		8BA3C3232234E11300DD11C1 /* MovieStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3C3222234E11300DD11C1 /* MovieStore.swift */; };
 		8BA3C3252234E15400DD11C1 /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3C3242234E15400DD11C1 /* MovieService.swift */; };
+		8BA3C32922355CF700DD11C1 /* MovieViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3C32822355CF700DD11C1 /* MovieViewViewModel.swift */; };
+		8BA3C32B22356B9700DD11C1 /* MovieListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3C32A22356B9700DD11C1 /* MovieListViewViewModel.swift */; };
+		8BA3C32E223573B800DD11C1 /* SegmentedControl+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3C32D223573B800DD11C1 /* SegmentedControl+Extension.swift */; };
+		8BA3C3302235745600DD11C1 /* MovieSearchViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3C32F2235745600DD11C1 /* MovieSearchViewViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +42,10 @@
 		8BA3C31F2234E0D300DD11C1 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		8BA3C3222234E11300DD11C1 /* MovieStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieStore.swift; sourceTree = "<group>"; };
 		8BA3C3242234E15400DD11C1 /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
+		8BA3C32822355CF700DD11C1 /* MovieViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewViewModel.swift; sourceTree = "<group>"; };
+		8BA3C32A22356B9700DD11C1 /* MovieListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewViewModel.swift; sourceTree = "<group>"; };
+		8BA3C32D223573B800DD11C1 /* SegmentedControl+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SegmentedControl+Extension.swift"; sourceTree = "<group>"; };
+		8BA3C32F2235745600DD11C1 /* MovieSearchViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchViewViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +66,6 @@
 				4601DAB847F2CECF9E5F3266 /* Pods-MovieInfo.debug.xcconfig */,
 				479B5323C1C83A3D21FFDF46 /* Pods-MovieInfo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -84,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				8BA3C3012234D68B00DD11C1 /* AppDelegate.swift */,
+				8BA3C32C2235739600DD11C1 /* Extensions */,
 				8BA3C31A2234DDC300DD11C1 /* Cells */,
 				8BA3C3182234DD1000DD11C1 /* Models */,
 				8BA3C3192234DD2600DD11C1 /* Resources */,
@@ -96,6 +104,7 @@
 		8BA3C3172234DD0800DD11C1 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8BA3C32722355CEA00DD11C1 /* View Models */,
 				8BA3C3132234D8E300DD11C1 /* MovieListViewController.swift */,
 				8BA3C3152234D90500DD11C1 /* MovieSearchViewController.swift */,
 			);
@@ -145,6 +154,24 @@
 				8BA3C3242234E15400DD11C1 /* MovieService.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		8BA3C32722355CEA00DD11C1 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				8BA3C32822355CF700DD11C1 /* MovieViewViewModel.swift */,
+				8BA3C32A22356B9700DD11C1 /* MovieListViewViewModel.swift */,
+				8BA3C32F2235745600DD11C1 /* MovieSearchViewViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		8BA3C32C2235739600DD11C1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8BA3C32D223573B800DD11C1 /* SegmentedControl+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		AF53F844D39E149C0FA07B4B /* Frameworks */ = {
@@ -257,12 +284,16 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MovieInfo/Pods-MovieInfo-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -278,8 +309,12 @@
 			files = (
 				8BA3C3022234D68B00DD11C1 /* AppDelegate.swift in Sources */,
 				8BA3C3142234D8E300DD11C1 /* MovieListViewController.swift in Sources */,
+				8BA3C32922355CF700DD11C1 /* MovieViewViewModel.swift in Sources */,
+				8BA3C3302235745600DD11C1 /* MovieSearchViewViewModel.swift in Sources */,
 				8BA3C3232234E11300DD11C1 /* MovieStore.swift in Sources */,
 				8BA3C31D2234DDE200DD11C1 /* MovieCell.swift in Sources */,
+				8BA3C32B22356B9700DD11C1 /* MovieListViewViewModel.swift in Sources */,
+				8BA3C32E223573B800DD11C1 /* SegmentedControl+Extension.swift in Sources */,
 				8BA3C3162234D90500DD11C1 /* MovieSearchViewController.swift in Sources */,
 				8BA3C3202234E0D300DD11C1 /* Movie.swift in Sources */,
 				8BA3C3252234E15400DD11C1 /* MovieService.swift in Sources */,

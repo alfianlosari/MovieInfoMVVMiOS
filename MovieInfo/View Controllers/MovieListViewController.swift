@@ -7,55 +7,39 @@
 //
 
 import UIKit
-import Kingfisher
+import RxCocoa
+import RxSwift
 
 class MovieListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    let dateFormatter: DateFormatter = {
-        $0.dateStyle = .medium
-        $0.timeStyle = .none
-        return $0
-    }(DateFormatter())
-    
-    let movieService: MovieService = MovieStore.shared
-    var movies = [Movie]() {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
-    var endpoint = Endpoint.nowPlaying {
-        didSet {
-            fetchMovies()
-        }
-    }
-    
+    var movieListViewViewModel: MovieListViewViewModel!
+    let disposeBag = DisposeBag()
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupTableView()
-        fetchMovies()
-    }
-    
-    private func fetchMovies() {
-        self.movies = []
-        activityIndicatorView.startAnimating()
-        infoLabel.isHidden = true
+        movieListViewViewModel = MovieListViewViewModel(endpoint: segmentedControl.rx.selectedSegmentIndex.asDriver(), movieService: MovieStore.shared)
         
-        movieService.fetchMovies(from: endpoint, params: nil, successHandler: {[unowned self] (response) in
-            self.activityIndicatorView.stopAnimating()
-            self.movies = response.results
-        }) { [unowned self] (error) in
-            self.activityIndicatorView.stopAnimating()
-            self.infoLabel.text = error.localizedDescription
-            self.infoLabel.isHidden = false
-        }
+        movieListViewViewModel.movies.drive(onNext: {[unowned self] (_) in
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
+        
+        movieListViewViewModel.isFetching.drive(activityIndicatorView.rx.isAnimating)
+            .disposed(by: disposeBag)
+        
+        movieListViewViewModel.error.drive(onNext: {[unowned self] (error) in
+            self.infoLabel.isHidden = !self.movieListViewViewModel.hasError
+            self.infoLabel.text = error
+        }).disposed(by: disposeBag)
+        
+        setupTableView()
     }
-    
+
     private func setupTableView() {
         tableView.tableFooterView = UIView()
         tableView.rowHeight = UITableView.automaticDimension
@@ -63,45 +47,19 @@ class MovieListViewController: UIViewController {
         tableView.register(UINib(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "MovieCell")
     }
     
-    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
-        endpoint = sender.endpoint
-    }
 }
 
 extension MovieListViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return movieListViewViewModel.numberOfMovies
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-        let movie = movies[indexPath.row]
-        
-        
-        cell.titleLabel.text = movie.title
-        cell.releaseDateLabel.text = dateFormatter.string(from: movie.releaseDate)
-        cell.overviewLabel.text = movie.overview
-        cell.posterImageView.kf.setImage(with: movie.posterURL)
-        
-        let rating = Int(movie.voteAverage)
-        let ratingText = (0..<rating).reduce("") { (acc, _) -> String in
-            return acc + "⭐️"
+        if let viewModel = movieListViewViewModel.viewModelForMovie(at: indexPath.row) {
+            cell.configure(viewModel: viewModel)
         }
-        cell.ratingLabel.text = ratingText
-
         return cell
-    }
-}
-
-fileprivate extension UISegmentedControl {
-    
-    var endpoint: Endpoint {
-        switch self.selectedSegmentIndex {
-        case 0: return .nowPlaying
-        case 1: return .popular
-        case 2: return .upcoming
-        default: fatalError()
-        }
     }
 }

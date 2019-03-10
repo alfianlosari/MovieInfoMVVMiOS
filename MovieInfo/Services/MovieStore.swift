@@ -12,7 +12,7 @@ public class MovieStore: MovieService {
     
     public static let shared = MovieStore()
     private init() {}
-    private let apiKey = "XXXXXXXXXXXXX"
+    private let apiKey = "XXXXXXXXX"
     private let baseAPIURL = "https://api.themoviedb.org/3"
     private let urlSession = URLSession.shared
     
@@ -118,6 +118,7 @@ public class MovieStore: MovieService {
         var queryItems = [URLQueryItem(name: "api_key", value: apiKey),
                           URLQueryItem(name: "language", value: "en-US"),
                           URLQueryItem(name: "include_adult", value: "false"),
+                          URLQueryItem(name: "region", value: "US"),
                           URLQueryItem(name: "query", value: query)
                           ]
         if let params = params {
@@ -146,7 +147,7 @@ public class MovieStore: MovieService {
                 self.handleError(errorHandler: errorHandler, error: MovieError.noData)
                 return
             }
-
+            
             do {
                 let moviesResponse = try self.jsonDecoder.decode(MoviesResponse.self, from: data)
                 DispatchQueue.main.async {

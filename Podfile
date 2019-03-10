@@ -7,5 +7,7 @@ target 'MovieInfo' do
 
   # Pods for MovieInfo
   pod 'Kingfisher'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 
 end

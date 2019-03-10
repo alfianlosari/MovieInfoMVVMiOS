@@ -91,21 +91,20 @@
                     <navigationItem key="navigationItem" id="lFl-nY-eg1">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="wBZ-Ap-UCQ">
-                            <rect key="frame" x="53" y="6" width="269" height="32"/>
+                            <rect key="frame" x="8" y="7" width="359" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Now Playing"/>
                                 <segment title="Popular"/>
                                 <segment title="Upcoming"/>
+                                <segment title="Top Rated"/>
                             </segments>
-                            <connections>
-                                <action selector="segmentChanged:" destination="A1T-wF-fdv" eventType="valueChanged" id="b3R-z2-lna"/>
-                            </connections>
                         </segmentedControl>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicatorView" destination="qq1-Au-404" id="boY-qX-7OG"/>
                         <outlet property="infoLabel" destination="NiL-Uq-0bV" id="bcs-wp-20c"/>
+                        <outlet property="segmentedControl" destination="wBZ-Ap-UCQ" id="dQ1-1B-bSc"/>
                         <outlet property="tableView" destination="3x9-A7-gpU" id="rYh-uw-psx"/>
                     </connections>
                 </viewController>
