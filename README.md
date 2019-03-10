@@ -1,4 +1,4 @@
-# Movie Info Starter Project
+# Movie Info MVVM Final Project
 
 ![Alt text](./promo.png?raw=true "Movie Info")
 
