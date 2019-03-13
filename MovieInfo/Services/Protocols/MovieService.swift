@@ -34,8 +34,8 @@ public enum Endpoint: String, CustomStringConvertible, CaseIterable {
     public init?(index: Int) {
         switch index {
         case 0: self = .nowPlaying
-        case 1: self = .upcoming
-        case 2: self = .popular
+        case 1: self = .popular
+        case 2: self = .upcoming
         case 3: self = .topRated
         default: return nil
         }

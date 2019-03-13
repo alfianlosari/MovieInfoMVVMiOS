@@ -15,13 +15,11 @@ class MovieListViewViewModel {
     private let movieService: MovieService
     private let disposeBag = DisposeBag()
     
-    init(endpoint: Driver<Int>, movieService: MovieService) {
+    init(endpoint: Driver<Endpoint>, movieService: MovieService) {
         self.movieService = movieService
         endpoint
-            .drive(onNext: { [weak self] (index) in
-                guard let endpoint = Endpoint(index: index) else {
-                    return
-                }
+            .drive(onNext: { [weak self] (endpoint) in
+                print(endpoint)
                 self?.fetchMovies(endpoint: endpoint)
         }).disposed(by: disposeBag)
     }

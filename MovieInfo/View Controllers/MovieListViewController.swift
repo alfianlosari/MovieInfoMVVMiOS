@@ -23,7 +23,10 @@ class MovieListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        movieListViewViewModel = MovieListViewViewModel(endpoint: segmentedControl.rx.selectedSegmentIndex.asDriver(), movieService: MovieStore.shared)
+        movieListViewViewModel = MovieListViewViewModel(endpoint: segmentedControl.rx.selectedSegmentIndex
+            .map { Endpoint(index: $0) ?? .nowPlaying }
+            .asDriver(onErrorJustReturn: .nowPlaying)
+            , movieService: MovieStore.shared)
         
         movieListViewViewModel.movies.drive(onNext: {[unowned self] (_) in
             self.tableView.reloadData()
